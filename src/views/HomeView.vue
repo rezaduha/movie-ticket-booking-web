@@ -8,10 +8,10 @@
     </div>
   </div>
   <div class="movie-container">
-    <div v-for="i in 10" class="movie-item">
-      <img class="movie-item__poster" src="https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg" alt="">
+    <div v-for="movie in listMovie" class="movie-item">
+      <img class="movie-item__poster" :src="movie.Poster" alt="">
       <div class="attribute">
-        <h2 class="movie-item__title">Movie {{ i }}</h2>
+        <h2 class="movie-item__title">{{ movie.Title }}</h2>
       </div>
     </div>
   </div>
@@ -22,13 +22,25 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { useMovieStore } from '@/stores/movie';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+
 import BaseButton from '@/components/BaseButton.vue';
 
 
 const router = useRouter()
+const movieStore = useMovieStore()
+const { fetchListMovie } = movieStore
+const { listMovie } = storeToRefs(movieStore)
+
 function goToHistory() {
   router.push('/history')
 }
+
+onMounted(() => {
+  fetchListMovie()
+})
 </script>
 
 <style scoped lang="scss">

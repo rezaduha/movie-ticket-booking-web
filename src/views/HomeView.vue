@@ -1,4 +1,5 @@
 <template>
+  <ProgressBar v-if="onProgress" />
   <div class="greet-container">
     <div class="greet">
       <span class="greet__welcome">
@@ -28,12 +29,13 @@ import { onMounted } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
 import MovieCard from '@/components/MovieCard.vue';
+import ProgressBar from '@/components/ProgressBar.vue';
 
 
 const router = useRouter()
 const movieStore = useMovieStore()
 const { fetchListMovie } = movieStore
-const { listMovie } = storeToRefs(movieStore)
+const { onProgress, listMovie } = storeToRefs(movieStore)
 
 function goToDetail(imdbId: string) {
   router.push(`/movie/${imdbId}`)

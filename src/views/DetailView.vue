@@ -1,5 +1,6 @@
 <template>
-  <div class="movie-container">
+  <ProgressBar v-if="onProgress" />
+  <div v-else class="movie-container">
     <div class="movie-content">
       <img class="movie-content__poster" :src="detailMovie?.Poster" alt="">
       <div class="poster-overlay"></div>
@@ -27,6 +28,7 @@ import { useMovieStore } from '@/stores/movie';
 import { storeToRefs } from 'pinia';
 
 import BaseButton from '@/components/BaseButton.vue';
+import ProgressBar from '@/components/ProgressBar.vue';
 
 
 const route = useRoute()
@@ -34,7 +36,7 @@ const router = useRouter()
 
 const movieStore = useMovieStore()
 const { fetchDetailMovie } = movieStore
-const { detailMovie } = storeToRefs(movieStore)
+const { onProgress, detailMovie } = storeToRefs(movieStore)
 const imdbID = route.params.id.toString()
 
 function goToBooking() {

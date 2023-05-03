@@ -8,12 +8,12 @@
     </div>
   </div>
   <div class="movie-container">
-    <div v-for="movie in listMovie" class="movie-item">
-      <img class="movie-item__poster" :src="movie.Poster" alt="">
-      <div class="attribute">
-        <h2 class="movie-item__title">{{ movie.Title }}</h2>
-      </div>
-    </div>
+    <MovieCard
+      v-for="item in listMovie" 
+      :title="item.Title"
+      :poster="item.Poster"
+      @onClick="goToDetail(item.imdbID)"
+    />
   </div>
   <div class="action-bar">
     <BaseButton label="History" @onClick="goToHistory()" />
@@ -27,12 +27,17 @@ import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 
 import BaseButton from '@/components/BaseButton.vue';
+import MovieCard from '@/components/MovieCard.vue';
 
 
 const router = useRouter()
 const movieStore = useMovieStore()
 const { fetchListMovie } = movieStore
 const { listMovie } = storeToRefs(movieStore)
+
+function goToDetail(imdbId: string) {
+  router.push(`/movie/${imdbId}`)
+}
 
 function goToHistory() {
   router.push('/history')

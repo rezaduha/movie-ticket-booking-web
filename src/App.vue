@@ -24,5 +24,6 @@ function goBack() {
 header {
   position: relative;
   padding: 24px 16px;
+  z-index: 999;
 }
 </style>

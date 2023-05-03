@@ -16,13 +16,12 @@
     </div>
   </div>
   <div class="action-bar">
-    <button class="base-button">
-      Book
-    </button>
+    <BaseButton label="Book" />
   </div>
 </template>
 
 <script setup lang="ts">
+import BaseButton from '@/components/BaseButton.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -98,40 +97,6 @@
       margin-bottom: 8px;
     }
 
-  }
-}
-
-.action-bar {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-  background-image: linear-gradient(to top, rgba(28, 28, 39, 0.9) 40%, rgba(0, 0, 0, 0));
-  padding: 16px;
-  width: 100%;
-  z-index: 99;
-
-  .base-button {
-    color: white;
-    font-weight: 600;
-    background-color: #f17707;
-    box-shadow: 0 2px 12px 2px rgba(241, 119, 7, 0.35);
-    width: 68%;
-    padding: 8px;
-    border-radius: 50px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #bf5c00;
-    }
-  }
-}
-
-@media only screen and (min-width: 480px) {
-  .action-bar {
-    width: 320px;
-    margin-bottom: 5vh;
-    border-radius: 0 0 16px 16px;
   }
 }
 </style>

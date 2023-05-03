@@ -12,13 +12,17 @@
     <select>
       <option v-for="i in 5" :value="i" :selected="i === 1">{{ i }}</option>
     </select>
-    <button class="select-button">
-      Select
-    </button>
+    <BaseButton
+      class="select-button" 
+      label="Select"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import BaseButton from '@/components/BaseButton.vue';
+
+
 const seats = [
   'A1', 'A2', 'A3', 'A4', 'A5',
   'B1', 'B2', 'B3', 'B4', 'B5',
@@ -102,40 +106,6 @@ const seats = [
 
   .select-button {
     flex: 1;
-  }
-}
-
-.action-bar {
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-  background-image: linear-gradient(to top, rgba(28, 28, 39, 0.9) 40%, rgba(0, 0, 0, 0));
-  padding: 16px;
-  width: 100%;
-  z-index: 99;
-
-  .select-button {
-    color: white;
-    font-weight: 600;
-    background-color: #f17707;
-    box-shadow: 0 2px 12px 2px rgba(241, 119, 7, 0.35);
-    width: 68%;
-    padding: 8px;
-    border-radius: 50px;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: #bf5c00;
-    }
-  }
-}
-
-@media only screen and (min-width: 480px) {
-  .action-bar {
-    width: 320px;
-    margin-bottom: 5vh;
-    border-radius: 0 0 16px 16px;
   }
 }
 </style>

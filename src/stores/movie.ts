@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Movie } from "@/types/movie";
-import { getListMovie } from "@/api/movie";
+import { getListMovie, getMovieById } from "@/api/movie";
 
 export const useMovieStore = defineStore('movie', () => {
   const listMovie = ref<Movie[]>()
+  const detailMovie = ref<Movie>()
 
   async function fetchListMovie() {
     await getListMovie()
@@ -16,8 +17,20 @@ export const useMovieStore = defineStore('movie', () => {
       })
   }
 
+  async function fetchDetailMovie(imdbId: string) {
+    await getMovieById(imdbId)
+      .then(response => {
+        detailMovie.value = response
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
   return {
     listMovie,
-    fetchListMovie
+    detailMovie,
+    fetchListMovie,
+    fetchDetailMovie
   }
 })

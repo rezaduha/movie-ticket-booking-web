@@ -1,27 +1,49 @@
 <template>
   <div class="movie-container">
     <div class="movie-content">
-      <img class="movie-content__poster" src="https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg" alt="">
+      <img class="movie-content__poster" :src="detailMovie?.Poster" alt="">
       <div class="poster-overlay"></div>
       <div class="movie-content-body">
         <p class="movie-content__rating">
-          <span>IMDB 7.7</span>
-          <span>123,000 votes</span>
+          <span>IMDB {{ detailMovie?.imdbRating }}</span>
+          <span>{{ detailMovie?.imdbVotes }} votes</span>
         </p>
-        <h3 class="movie-content__title">Movie Title</h3>
+        <h3 class="movie-content__title">{{ detailMovie?.Title }}</h3>
         <p class="movie-content__description">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis eum eos, consectetur voluptates ad, recusandae, delectus inventore consequatur esse vitae aspernatur suscipit. Tenetur, culpa. Animi commodi excepturi reiciendis dolorum fugit est blanditiis autem tenetur labore! Exercitationem ipsa architecto placeat fugiat blanditiis illum nobis, eos tempora! Quia dolore hic est repudiandae!
+          {{ detailMovie?.Plot }}
         </p>
       </div>
     </div>
   </div>
   <div class="action-bar">
-    <BaseButton label="Book" />
+    <BaseButton label="Book" @onClick="goToBooking()" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useMovieStore } from '@/stores/movie';
+import { storeToRefs } from 'pinia';
+
 import BaseButton from '@/components/BaseButton.vue';
+
+
+const route = useRoute()
+const router = useRouter()
+
+const movieStore = useMovieStore()
+const { fetchDetailMovie } = movieStore
+const { detailMovie } = storeToRefs(movieStore)
+const imdbID = route.params.id.toString()
+
+function goToBooking() {
+  router.push(`/movie/${imdbID}/booking`)
+}
+
+onMounted(() => {
+  fetchDetailMovie(imdbID)
+})
 </script>
 
 <style lang="scss" scoped>

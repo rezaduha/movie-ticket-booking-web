@@ -58,6 +58,8 @@ function handleBook() {
       detailMovie.value.Poster,
       checkedSeat.value
     )
+
+    router.push('/history')
   }
 }
 

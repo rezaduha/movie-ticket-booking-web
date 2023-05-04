@@ -3,7 +3,7 @@ import { ref } from "vue";
 import type { Booking } from "@/types/booking";
 
 export const useBookingStore = defineStore('booking', () => {
-  const listBookedMovie = ref<Booking[]>()
+  const listBookedMovie = ref<Booking[]>([])
 
   function bookMovie(imdbId: string, title: string, poster: string, seat: string[]) {
     let booking: Booking = {

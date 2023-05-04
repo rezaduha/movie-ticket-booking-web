@@ -15,16 +15,24 @@
     <BaseButton
       class="select-button" 
       label="Select"
+      @onClick="handleBook()"
       :disabled="checkedSeat.length !== selectSeatAmount"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useMovieStore } from '@/stores/movie';
+import { useBookingStore } from '@/stores/booking';
+import { storeToRefs } from 'pinia';
 
 import BaseButton from '@/components/BaseButton.vue';
 
+
+const route = useRoute()
+const router = useRouter()
 
 const seats = [
   'A1', 'A2', 'A3', 'A4', 'A5',
@@ -33,6 +41,29 @@ const seats = [
 ]
 const checkedSeat = ref([])
 const selectSeatAmount = ref(1)
+
+const movieStore = useMovieStore()
+const bookingStore = useBookingStore()
+const { fetchDetailMovie } = movieStore
+const { bookMovie } = bookingStore
+
+const { detailMovie } = storeToRefs(movieStore)
+const imdbID = route.params.id.toString()
+
+function handleBook() {
+  if (detailMovie.value) {
+    bookMovie(
+      detailMovie.value.imdbID,
+      detailMovie.value.Title,
+      detailMovie.value.Poster,
+      checkedSeat.value
+    )
+  }
+}
+
+onMounted(() => {
+  fetchDetailMovie(imdbID)
+})
 </script>
 
 <style lang="scss" scoped>

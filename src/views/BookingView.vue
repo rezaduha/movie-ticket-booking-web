@@ -13,6 +13,7 @@
     <span class="seat__description-booked">Booked</span>
     <span class="seat__description-selected">Selected</span>
   </div>
+  <LimitMessage v-if="checkedSeat.length > selectSeatAmount" class="error-limit" />
   <div class="action-bar">
     <select v-model="selectSeatAmount">
       <option v-for="i in 5" :value="i" :selected="i === 1">{{ i }}</option>
@@ -34,6 +35,7 @@ import { useBookingStore } from '@/stores/booking';
 import { storeToRefs } from 'pinia';
 
 import BaseButton from '@/components/BaseButton.vue';
+import LimitMessage from '@/components/LimitMessage.vue'
 
 
 const route = useRoute()
@@ -165,6 +167,10 @@ onMounted(() => {
       background-color: #f8c300;
     }
   }
+}
+
+.error-limit {
+  margin-bottom: 72px;
 }
 
 .action-bar {

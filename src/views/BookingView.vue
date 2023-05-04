@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, watch, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useMovieStore } from '@/stores/movie';
 import { useBookingStore } from '@/stores/booking';
@@ -62,6 +62,12 @@ function handleBook() {
     router.push('/history')
   }
 }
+
+watch(() => selectSeatAmount.value, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    checkedSeat.value = []
+  }
+})
 
 onMounted(() => {
   fetchDetailMovie(imdbID)

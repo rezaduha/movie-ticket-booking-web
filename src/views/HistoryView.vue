@@ -1,4 +1,5 @@
 <template>
+  <EmptyMessage v-if="listBookedMovie.length === 0"  />
   <div class="history-container">
     <MovieCard
       v-for="movie in listBookedMovie"
@@ -19,6 +20,7 @@ import { useBookingStore } from '@/stores/booking';
 import { storeToRefs } from 'pinia';
 
 import MovieCard from '@/components/MovieCard.vue';
+import EmptyMessage from '@/components/EmptyMessage.vue'
 
 
 const bookingStore = useBookingStore()

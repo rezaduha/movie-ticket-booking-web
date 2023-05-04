@@ -1,13 +1,13 @@
 <template>
   <div class="history-container">
     <MovieCard
-      v-for="i in 5"
-      :title="`Movie ${i}`"
-      poster="https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg"
+      v-for="movie in listBookedMovie"
+      :title="movie.Title"
+      :poster="movie.Poster"
       isFull>
       <template #seat>
         <p class="movie__content-seat">
-          Seats : <span v-for="seat in 3">A{{ seat }}</span>
+          Seats : <span v-for="seat in movie.Seat">{{ seat }}</span>
         </p>
       </template>
     </MovieCard>
@@ -15,7 +15,14 @@
 </template>
 
 <script setup lang="ts">
+import { useBookingStore } from '@/stores/booking';
+import { storeToRefs } from 'pinia';
+
 import MovieCard from '@/components/MovieCard.vue';
+
+
+const bookingStore = useBookingStore()
+const { listBookedMovie } = storeToRefs(bookingStore)
 </script>
 
 <style scoped lang="scss">

@@ -8,6 +8,11 @@
       <label :for="seat">{{ seat }}</label>
     </div>
   </div>
+  <div class="seat__description">
+    <span class="seat__description-available">Available</span>
+    <span class="seat__description-booked">Booked</span>
+    <span class="seat__description-selected">Selected</span>
+  </div>
   <div class="action-bar">
     <select v-model="selectSeatAmount">
       <option v-for="i in 5" :value="i" :selected="i === 1">{{ i }}</option>
@@ -126,6 +131,38 @@ onMounted(() => {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+    }
+  }
+
+  &__description {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 10px;
+    color: #888888;
+    margin-bottom: 24px;
+
+    &-selected::before,
+    &-booked::before,
+    &-available::before {
+      content: "";
+      display: inline-block;
+      margin-right: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 12px;
+      vertical-align: sub;
+    }
+
+    &-available::before {
+      background-color: #363740;
+    }
+
+    &-booked::before {
+      background-color: #999999;
+    }
+
+    &-selected::before {
+      background-color: #f8c300;
     }
   }
 }

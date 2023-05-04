@@ -4,22 +4,25 @@
   </div>
   <div class="seat">
     <div class="seat__item" v-for="seat in seats">
-      <input type="checkbox" :name="seat" :id="seat" :value="seat">
+      <input type="checkbox" :name="seat" :id="seat" :value="seat" v-model="checkedSeat">
       <label :for="seat">{{ seat }}</label>
     </div>
   </div>
   <div class="action-bar">
-    <select>
+    <select v-model="selectSeatAmount">
       <option v-for="i in 5" :value="i" :selected="i === 1">{{ i }}</option>
     </select>
     <BaseButton
       class="select-button" 
       label="Select"
+      :disabled="checkedSeat.length !== selectSeatAmount"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import BaseButton from '@/components/BaseButton.vue';
 
 
@@ -28,6 +31,8 @@ const seats = [
   'B1', 'B2', 'B3', 'B4', 'B5',
   'C1', 'C2', 'C3', 'C4', 'C5',
 ]
+const checkedSeat = ref([])
+const selectSeatAmount = ref(1)
 </script>
 
 <style lang="scss" scoped>

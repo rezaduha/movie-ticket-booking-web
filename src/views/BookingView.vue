@@ -4,7 +4,7 @@
   </div>
   <div class="seat">
     <div class="seat__item" v-for="seat in seats">
-      <input type="checkbox" :name="seat" :id="seat" :value="seat" v-model="checkedSeat">
+      <input type="checkbox" :name="seat" :id="seat" :value="seat" v-model="checkedSeat" :disabled="bookedMovieSeats.includes(seat)">
       <label :for="seat">{{ seat }}</label>
     </div>
   </div>
@@ -52,9 +52,10 @@ const selectSeatAmount = ref(1)
 const movieStore = useMovieStore()
 const bookingStore = useBookingStore()
 const { fetchDetailMovie } = movieStore
-const { bookMovie } = bookingStore
+const { bookMovie, getBookedSeats } = bookingStore
 
 const { detailMovie } = storeToRefs(movieStore)
+const { bookedMovieSeats } = storeToRefs(bookingStore)
 const imdbID = route.params.id.toString()
 
 function handleBook() {
@@ -78,6 +79,7 @@ watch(() => selectSeatAmount.value, (newValue, oldValue) => {
 
 onMounted(() => {
   fetchDetailMovie(imdbID)
+  getBookedSeats(imdbID)
 })
 </script>
 

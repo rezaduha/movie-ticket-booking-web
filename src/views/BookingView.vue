@@ -4,7 +4,13 @@
   </div>
   <div class="seat">
     <div class="seat__item" v-for="seat in seats">
-      <input type="checkbox" :name="seat" :id="seat" :value="seat" v-model="checkedSeat" :disabled="bookedMovieSeats.includes(seat)">
+      <input 
+        type="checkbox" 
+        :name="seat" 
+        :id="seat" 
+        :value="seat" 
+        v-model="checkedSeat" 
+        :disabled="bookedMovieSeats.includes(seat) || checkedSeat.length === selectSeatAmount && !checkedSeat.includes(seat)">
       <label :for="seat">{{ seat }}</label>
     </div>
   </div>
@@ -13,7 +19,6 @@
     <span class="seat__description-booked">Booked</span>
     <span class="seat__description-selected">Selected</span>
   </div>
-  <LimitMessage v-if="checkedSeat.length > selectSeatAmount" class="error-limit" />
   <div class="action-bar">
     <select v-model="selectSeatAmount">
       <option v-for="i in 5" :value="i" :selected="i === 1">{{ i }}</option>
@@ -35,7 +40,6 @@ import { useBookingStore } from '@/stores/booking';
 import { storeToRefs } from 'pinia';
 
 import BaseButton from '@/components/BaseButton.vue';
-import LimitMessage from '@/components/LimitMessage.vue'
 
 
 const route = useRoute()
@@ -46,7 +50,7 @@ const seats = [
   'B1', 'B2', 'B3', 'B4', 'B5',
   'C1', 'C2', 'C3', 'C4', 'C5',
 ]
-const checkedSeat = ref([])
+const checkedSeat = ref<string[]>([])
 const selectSeatAmount = ref(1)
 
 const movieStore = useMovieStore()
@@ -169,10 +173,6 @@ onMounted(() => {
       background-color: #f8c300;
     }
   }
-}
-
-.error-limit {
-  margin-bottom: 72px;
 }
 
 .action-bar {
